@@ -1,0 +1,24 @@
+{% extends 'base.html' %}
+
+{% block content %}
+{% include 'navbar.html' %}
+<div class="container text-center" style="margin-top: 10%;margin-bottom: 10%;">
+    <h1>Welcome back to Duber, {{ request.session.username }}!</h1>
+    <h2>This is the best platform for ride sharing services.</h2>
+    <br />
+    <h3>For Owners: </h3>
+    {% include 'owner_cards.html' %}
+
+    <br />
+    {% if request.session.is_driver%}
+    <h3>For Drivers: </h3>
+    {% include 'driver_cards.html' %}
+    {% endif %}
+
+    <br />
+    <h3>For Sharers: </h3>
+    {% include 'sharer_cards.html' %}
+    
+</div>
+
+{% endblock %}

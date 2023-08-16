@@ -1,0 +1,18 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+<div class="container text-center" style="margin-top: 10%;">
+    <h1>Edit the ride</h1>
+    <p>Thank you for choosing us! You can only mark confirmed rides to be completed here...</p>
+    <form method="POST">
+        {% csrf_token %}
+        {{ form.as_p }}
+        <div>
+            <a type="button" href="/overview/driver_rides" class="btn btn-primary">Back to Driver Rides</a>
+            <button type="submit" class="btn btn-success">Submit</button>
+        </div>
+    </form>
+    {% include 'form_errors.html' %}
+</div>
+{% endblock %}

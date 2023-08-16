@@ -1,0 +1,51 @@
+{% extends 'base.html' %}
+
+{% block content %}
+{% include 'navbar.html' %}
+<div class="container text-center" style="margin-top: 10%;margin-bottom: 10%;">
+    <h1>Here are your rides, {{ request.session.username }}.</h1>
+    <p>You can be a rider, a driver, or a sharer as you like. And your rides can be open, confirmed, or completed.</p>
+
+    <br />
+    <h4>Your rides as the owner</h4>
+    <table class="table">
+        <thead>
+            <tr>
+                <th scope="col">Ride Id</th>
+                <th scope="col">Destination</th>
+                <th scope="col">Arrival Date and Time</th>
+                <th scope="col"># of Passengers</th>
+                <th scope="col">Shared</th>
+                <th scope="col">Ride Status</th>
+                <th scope="col">*Special Request</th>
+                <th scope="col">*Vehicle Type</th>
+                <th scope="col">View</th>
+                <th scope="col">Edit</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for ride in owner_rides %}
+            <tr>
+                <th scope="row">{{ ride.id }}</td>
+                <td>{{ ride.destination }}</td>
+                <td>{{ ride.arrival }}</td>
+                <td>{{ ride.passenger_number }}</td>
+                <td>{{ ride.is_shared }}</td>
+                <td>{{ ride.status }}</td>
+                <td>{{ ride.special_request|default_if_none:"" }}</td>
+                <td>{{ ride.requested_vehicle_type|default_if_none:"" }}</td>
+                <td><a type="button" href="/overview/owner_rides/{{ ride.id }}" class="btn btn-primary">View</a></td>
+                {% if ride.status == "Open" %}
+                <td><a type="button" href="/overview/owner_rides/{{ ride.id }}/edit" class="btn btn-warning">Edit</a></td>
+                {% endif %}
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+    <br>
+    <a type="button" href="/overview" class="btn btn-success">Back to Overview</a>    
+    
+
+</div>
+
+{% endblock %}

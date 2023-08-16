@@ -1,0 +1,57 @@
+{% extends 'base.html' %}
+
+{% block content %}
+{% include 'navbar.html' %}
+<div class="container text-center" style="margin-top: 10%;margin-bottom: 10%;">
+    <h1>Here are your shared rides, {{ request.session.username }}.</h1>
+    <p>Thank you for choosing to be a sharer!</p>
+
+    <br />
+    <h4>Your rides as a sharer</h4>
+    <table class="table">
+        <thead>
+            <tr>
+                <th scope="col">Ride Id</th>
+                <th scope="col">Destination</th>
+                <th scope="col">Arrival Date and Time</th>
+                <th scope="col"># of Passengers</th>
+                <th scope="col">Shared</th>
+                <th scope="col">Ride Status</th>
+                <th scope="col">*Special Request</th>
+                <th scope="col">*Vehicle Type</th>
+                <th scope="col">View</th>
+                <th scope="col">Quit</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for ride in sharer_rides %}
+            <tr>
+            <form method="POST">
+                {% csrf_token %}
+                <th scope="row">{{ ride.id }}</td>
+                <td>{{ ride.destination }}</td>
+                <td>{{ ride.arrival }}</td>
+                <td>{{ ride.passenger_number }}</td>
+                <td>{{ ride.is_shared }}</td>
+                <td>{{ ride.status }}</td>
+                <td>{{ ride.special_request }}</td>
+                <td>{{ ride.requested_vehicle_type }}</td>
+                <td><a type="button" href="/overview/driver_rides/{{ ride.id }}" class="btn btn-primary">View</a></td>
+                <input type="hidden" name="ride_id" value="{{ ride.id }}" />
+                <input type="hidden" name="sharer_id" value="{{ sharer.id }}" />
+                {% if ride.status == "Open" %}
+                <td><button type="submit"  class="btn btn-danger" name="btn" value="Quit">Quit</button></td>
+                {% endif %}
+            </form>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+    <div>
+        <br>
+        <a type="button" href="/overview/sharer_search" class="btn btn-primary">Back to search</a>
+        <a type="button" href="/overview" class="btn btn-success">Back to Overview</a>    
+    </div>
+</div>
+
+{% endblock %}

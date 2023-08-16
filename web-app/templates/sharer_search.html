@@ -1,0 +1,63 @@
+{% extends 'base.html' %}
+{% block content %}
+{% include 'navbar.html' %}
+<div class="container text-center" style="margin-top: 5%;">
+    <h1>Search for a ride</h1>
+    <p>You can choose a ride you want to join in as a sharer!</p>
+    <form method="POST">
+        {% csrf_token %}
+        {{ form.as_p }}
+        <div>
+            <button type="submit" class="btn btn-primary">Search a ride</button>
+            <a type="button" href="/overview" class="btn btn-success">Back to Overview</a>    
+        </div>
+    </form>
+
+    
+    {% if sharer_search != null%}
+    <div class="container text-center" style="margin-top: 10%;">
+        {% if search_size == 0 %}
+        <p>Ooops, there is no revelent rides! </p>
+        {% else %}
+        <table class="table">
+            <thead>
+                <tr>
+                    <th scope="col">Ride Id</th>
+                    <th scope="col">Destination</th>
+                    <th scope="col">Arrival Date and Time</th>
+                    <th scope="col"># of Passengers</th>
+                    <th scope="col">Shared</th>
+                    <th scope="col">Ride Status</th>
+                    <th scope="col">*Special Request</th>
+                    <th scope="col">*Vehicle Type</th>
+                    <th scope="col">Join</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for ride in sharer_search %}
+                <tr>
+                <form method="POST">
+                    {% csrf_token %}
+                    <th scope="row">{{ ride.id }}</td>
+                    <td>{{ ride.destination }}</td>
+                    <td>{{ ride.arrival }}</td>
+                    <td>{{ ride.passenger_number }}</td>
+                    <td>{{ ride.is_shared }}</td>
+                    <td>{{ ride.status }}</td>
+                    <td>{{ ride.special_request }}</td>
+                    <td>{{ ride.requested_vehicle_type }}</td>
+                    <input type="hidden" name="ride_id" value="{{ ride.id }}" />
+                    
+                    <td><button type="submit" href="/overview/sharer_rides" class="btn btn-primary" name="btn" value="Join">Join</button></td>
+                    </form>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+        {% endif %}
+    </div>
+    {% endif %}
+</div>
+
+
+{% endblock %}

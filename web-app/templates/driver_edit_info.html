@@ -1,0 +1,25 @@
+{% extends 'base.html' %}
+
+{% block content %}
+{% include 'navbar.html' %}
+<div class="container text-center" style="margin-top: 10%;">
+    {% if request.session.is_driver%}
+    <h1>Thank you for being a driver, {{ request.session.username }}!</h1>
+    <p>Want to change some of your driver information? Let's start...</p>
+    {% else %}
+    <h1>Want to be a new driver, {{ request.session.username }}?</h1>
+    <p>Let's start by collecting some of your information...</p>
+    {% endif %}
+
+    <form method="POST">
+        {% csrf_token %}
+        {{ form.as_p }}
+        <div>
+            <a type="button" href="/overview" class="btn btn-primary">Back to Overview</a>
+            <button type="submit" class="btn btn-success">Submit</button>
+        </div>
+    </form>
+    {% include 'form_errors.html' %}
+</div>
+
+{% endblock %}

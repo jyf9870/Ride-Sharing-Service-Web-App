@@ -1,0 +1,18 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+<div class="container text-center" style="margin-top: 10%;">
+    <h1>Request a new ride</h1>
+    <p>Thank you for choosing us! Let's collect some info about your trip...</p>
+    <form method="POST">
+        {% csrf_token %}
+        {{ form.as_p }}
+        <div>
+            <button style="width:20%;"type="submit" class="btn btn-primary">Submit</button>
+            <a style="width:20%;"type="button" href="/overview" class="btn btn-success">Back to Overview</a>
+        </div>
+    </form>
+    {% include 'form_errors.html' %}
+</div>
+{% endblock %}

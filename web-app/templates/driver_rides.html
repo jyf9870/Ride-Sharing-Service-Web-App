@@ -1,0 +1,53 @@
+{% extends 'base.html' %}
+
+{% block content %}
+{% include 'navbar.html' %}
+<div class="container text-center" style="margin-top: 10%;margin-bottom: 10%;">
+    <h1>Here are your rides, {{ request.session.username }}.</h1>
+    <p>You can be a rider, a driver, or a sharer as you like. And your rides can be open, confirmed, or completed.</p>
+
+    <br />
+    <h4>Your confirmed rides as the driver</h4>
+    <table class="table">
+        <thead>
+            <tr>
+                <th scope="col">Ride Id</th>
+                <th scope="col">Destination</th>
+                <th scope="col">Arrival Date and Time</th>
+                <th scope="col"># of Passengers</th>
+                <th scope="col">Shared</th>
+                <th scope="col">Ride Status</th>
+                <th scope="col">*Special Request</th>
+                <th scope="col">*Vehicle Type</th>
+                <th scope="col">View</th>
+                <th scope="col">Mark as Complete</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for ride in driver_rides %}
+            {% if ride.status == "Confirmed" %}
+            <tr>
+                <form method="POST">
+                {% csrf_token %}
+                <input type="hidden" name="ride_id" value="{{ ride.id }}" />
+                <th scope="row">{{ ride.id }}</td>
+                <td>{{ ride.destination }}</td>
+                <td>{{ ride.arrival }}</td>
+                <td>{{ ride.passenger_number }}</td>
+                <td>{{ ride.is_shared }}</td>
+                <td>{{ ride.status }}</td>
+                <td>{{ special_request }}</td>
+                <td>{{ requested_vehicle_type }}</td>
+                <td><a type="button" href="/overview/driver_rides/{{ ride.id }}" class="btn btn-primary">View</a></td>
+                <td><button type="submit" href="/overview/driver_rides" class="btn btn-success">Complete</a></td>
+                </form>
+            </tr>
+            {% endif %}
+            {% endfor %}
+        </tbody>
+    </table>
+    <br>
+    <a type="button" href="/overview" class="btn btn-success">Back to Overview</a>    
+</div>
+
+{% endblock %}

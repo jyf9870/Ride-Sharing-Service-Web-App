@@ -1,0 +1,49 @@
+{% extends 'base.html' %}
+{% block content %}
+{% include 'navbar.html' %}
+<div class="container text-center" style="margin-top: 5%;">
+    <h1>Confirm a ride</h1>
+    <p>You can choose a ride you want to confirm to be a driver!</p>
+    <p>Listed below is searched accoring to your vehicle capacity, vehicle type and special requests! </p>
+    <div class="container text-center" style="margin-top: 10%;">
+        <table class="table">
+            <thead>
+                <tr>
+                    <th scope="col">Ride Id</th>
+                    <th scope="col">Destination</th>
+                    <th scope="col">Arrival Date and Time</th>
+                    <th scope="col"># of Passengers</th>
+                    <th scope="col">Shared</th>
+                    <th scope="col">Ride Status</th>
+                    <th scope="col">*Special Request</th>
+                    <th scope="col">*Vehicle Type</th>
+                    <th scope="col">Mark as Confirmed</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for ride in driver_search %}
+                <tr>
+                <form method="POST">
+                    {% csrf_token %}
+                    <input type="hidden" name="ride_id" value="{{ ride.id }}" />
+                    <th scope="row">{{ ride.id }}</td>                
+                    <td>{{ ride.destination }}</td>
+                    <td>{{ ride.arrival }}</td>
+                    <td>{{ ride.passenger_number }}</td>
+                    <td>{{ ride.is_shared }}</td>
+                    <td>{{ ride.status }}</td>
+                    <td>{{ ride.special_request }}</td>
+                    <td>{{ ride.requested_vehicle_type }}</td>
+                    <td><button type="submit" href="/overview/driver_search" class="btn btn-primary" name="btn" value="Confirm">Confirm</button></td>
+                </form>   
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+        <a type="button" href="/overview" class="btn btn-success">Back to Overview</a>    
+    </div>
+
+</div>
+
+
+{% endblock %}

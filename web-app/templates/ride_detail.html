@@ -1,0 +1,28 @@
+{% extends 'base.html' %}
+
+{% block content %}
+{% include 'navbar.html' %}
+<div class="container text-center" style="margin-top: 10%;">
+    <h1>Here is some info about your ride, {{ request.session.username }}.</h1>
+    <div class="card">
+        <h5 class="card-header">Ride {{ ride.id }}</h5>
+        <div class="card-body">
+            <h5 class="card-title">This ride is currently {{ ride.status }}</h5>
+
+            <ul class="list-group">
+                <li class="list-group-item">This ride is going to {{ ride.destination }}</li>
+                <li class="list-group-item">This ride is owned by {{ ride.owner }}</li>
+                <li class="list-group-item">This ride is driven by {{ ride.driver|default_if_none:"no one yet" }}</li>
+                <li class="list-group-item">The arrival time for this ride is {{ ride.arrival }}</li>
+                <li class="list-group-item">This ride request has {{ ride.passenger_number }} passengers</li>
+            </ul>
+
+            <p>Special Requests: {{ ride.special_request|default_if_none:"no special requests" }} </p>
+            <p>Requested Vehicle Type: {{ ride.requested_vehicle_type|default_if_none:"no requested vehicle type" }} </p>
+            
+            <!-- <p class="card-text">This ride is shared by {{ ride.sharer|default_if_none:"no one yet" }}</p> -->
+        </div>
+    </div>
+</div>
+
+{% endblock %}

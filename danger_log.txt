@@ -1,0 +1,20 @@
+Danger Log
+
+Team member 1: Yushun Chen (yc557)
+Team member 2: Yifan Jiang (yj193)
+
+1. One danger in our application is that user passwords are stored in plain text 
+in the database. While this is easy for testing and debugging internally, it is
+very dangerious and is a security risk. We could have implemented some hashing
+with salt or used some Django built-in authentication. But we have decided to 
+write everything on our own because it is the first time we are building a web
+application using Django. So it is important for us to keep this in the danger
+log.
+
+2. Another danger within the authentication component is that we used a
+traditional way of implementing a session identifier. When a user is logged in,
+a session is created. However, as we learned in class, the more modern approach
+is to store a JSON Web Token (JWT) in a cookie or LocalStorage. Server can 
+provide a bit of JSON that is cryptographically signed by the server, which
+cannot be tampered with. Also, some login information can be held in there as
+well. It could be a more secure method for authentication.
